@@ -84,5 +84,6 @@ struct API {
     static let kResendOTP     =   "resend_otp"
     static let kVerifyAgencyCode     =   "verify_agency_code"
     static let kAgencyCodeLabel     =   "agency_code_label"
-    
+    static let kDeleteAccount = "delete_my_account"
+   
 }

@@ -275,6 +275,49 @@ class UserViewModel: NSObject {
     }
     
     
+    func onDeleteAccount(sender:UIViewController,onSuccess:@escaping()->Void,onFailure:@escaping()->Void) {
+        if  ServerManager.shared.CheckNetwork(sender: sender){
+            showLoader(status: true)
+            let data = "&id=\(userID)"
+            guard let urlString = data.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return  }
+            ServerManager.shared.httpPost(request:  baseURL + API.kDeleteAccount + urlString, params: nil,headers: nil, successHandler: { (responseData:Data,status)  in
+                
+                
+                DispatchQueue.main.async {
+                    showLoader()
+                    guard let response = responseData.decoder(UserResponseModel2.self) else{return}
+                    
+                    switch status {
+                    case 200:
+                        let status = response.status ?? -999
+                        if status == 1 {
+                            userModel = response.data
+                            
+                            onSuccess()
+                        } else {
+                            showAlertWithSingleAction(sender: sender, message: response.message ?? "")
+                            onFailure()
+                        }
+                        
+                        break
+                    default:
+                        showAlertWithSingleAction(sender: sender, message: response.message ?? "")
+                        
+                        onFailure()
+                        break
+                    }
+                }
+            }, failureHandler: { (error) in
+                DispatchQueue.main.async {
+                    showLoader()
+                    showAlertWithSingleAction(sender: sender, message: error?.localizedDescription ?? "")
+                    onFailure()
+                }
+            })
+            
+        }
+    }
+    
     
     func getProfile(sender:UIViewController,onSuccess:@escaping()->Void,onFailure:@escaping()->Void) {
         if  ServerManager.shared.CheckNetwork(sender: sender){

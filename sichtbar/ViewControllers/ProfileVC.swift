@@ -54,7 +54,7 @@ class ProfileVC: UIViewController {
                     self.viewHide.isHidden = false
                     self.heightConstraint.constant = 55.0
                     self.btn.isUserInteractionEnabled = true
-                    self.btn.setTitle("gehen sie premium", for: .normal)
+                    self.btn.setTitle("Upgrade Preis", for: .normal)
                     
                 } else if userModel?.package ?? "" == "2" {
                     self.viewHide.isHidden = true
@@ -82,12 +82,23 @@ class ProfileVC: UIViewController {
       }
     
     
+    @IBAction func onClickDelete(_ sender: UIButton) {
+        showAlertWithTwoActions(sender: self,message: "Are you sure you want to Konto löschen?",title: "Konto", onSuccess: {
+            self.userViewModel.onDeleteAccount(sender: self, onSuccess: {
+                SceneDelegate().logout(self.view)
+            }, onFailure: {
+                
+            })
+        })
+      }
+    
+    
     @IBAction func addButtonClicked(_ sender: UIButton){
         let alertController = UIAlertController(title: "Agenturcode hinzufügen", message: "", preferredStyle: .alert)
         alertController.addTextField { (textField : UITextField!) -> Void in
             textField.placeholder = "Code eingeben"
         }
-        let saveAction = UIAlertAction(title: "Done", style: .default, handler: { alert -> Void in
+        let saveAction = UIAlertAction(title: "Erledigt", style: .default, handler: { alert -> Void in
             let firstTextField = alertController.textFields![0] as UITextField
             let value = firstTextField.text ?? ""
             if !value.isEmpty {
@@ -98,7 +109,7 @@ class ProfileVC: UIViewController {
                 })
             }
         })
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: { (action : UIAlertAction!) -> Void in })
+        let cancelAction = UIAlertAction(title: "Abbrechen", style: .cancel, handler: { (action : UIAlertAction!) -> Void in })
         
 
         alertController.addAction(saveAction)

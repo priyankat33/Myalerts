@@ -123,6 +123,8 @@ extension AppDelegate:UNUserNotificationCenterDelegate{
 //
 //            }
 //        }
+        NotificationCenter.default.post(name: Notification.Name("NotificationIdentifier"), object: nil)
+        completionHandler([.alert, .sound])
     }
     
 

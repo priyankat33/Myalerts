@@ -112,7 +112,7 @@ func showAlertWithTwoActions(sender:UIViewController,message:String = "",title:S
         UIAlertAction in
         onSuccess()
     }
-    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) {
+    let cancelAction = UIAlertAction(title: "Abbrechen", style: .cancel) {
         UIAlertAction in
     }
     

@@ -47,8 +47,17 @@ class HomeVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+                NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("NotificationIdentifier"), object: nil)
         getKpi()
     }
+    
+    
+    @objc func methodOfReceivedNotification(notification: Notification) {
+        getKpi()
+    }
+    
+    
+    
     
     private func getKpi() {
         homeViewModel.getKpi(page: 1, sender: self,  onSuccess: { [self] in
@@ -68,10 +77,12 @@ class HomeVC: UIViewController {
                 self.notificationLbl.isHidden = true
                 
             } else {
+                
                 self.notificationLbl.text = self.homeViewModel.notification_count
-                let objToBeSent = "2"
-                NotificationCenter.default.post(name: Notification.Name("NotificationIdentifier"), object: objToBeSent)
+                //let objToBeSent = "\(self.homeViewModel.notification_count)"
+               // NotificationCenter.default.post(name: Notification.Name("NotificationIdentifier"), object: objToBeSent)
                 self.notificationLbl.isHidden = true
+                self.navigationController!.tabBarController?.tabBar.items?[1].badgeValue = "\(self.homeViewModel.notification_count)"
             }
             //            self.receiptValidation()
         }, onFailure: {

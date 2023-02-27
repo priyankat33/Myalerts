@@ -13,18 +13,22 @@ class NotificationVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-       
     }
     
     @objc func methodOfReceivedNotification(notification: Notification) {
             print("Value of notification : ", notification.object ?? "")
-        self.navigationController!.tabBarItem.badgeValue = "\(notification.object ?? "")"
+        let count = notification.object as? String ?? ""
+        if count != "0" {
+            self.navigationController!.tabBarItem.badgeValue = "\(count)"
+        } else {
+            self.navigationController!.tabBarItem.badgeValue = nil
         }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("NotificationIdentifier"), object: nil)
-        
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("NotificationIdentifier"), object: nil)
+//
         homeViewModel.getNotification(page: 1, sender: self, onSuccess: {
             if self.homeViewModel.notificationModel.count > 0 {
                 self.tableView.reloadData()
@@ -34,22 +38,11 @@ class NotificationVC: UIViewController {
         })
         
         homeViewModel.markNotification(sender: self, onSuccess: {
-            
+            self.navigationController!.tabBarItem.badgeValue = nil
         }, onFailure: {
             
         })
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
 
 extension NotificationVC: UITableViewDataSource, UITableViewDelegate {
