@@ -100,5 +100,115 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8DD1FE97-9493-4ADF-A9D4-65C4669EC935"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "sichtbar/ServerManager/ServiceManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "191"
+            endingLineNumber = "191"
+            landmarkName = "requestTask(url:method:isBackgroundTask:params:headers:successHandler:failureHandler:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4CD79442-9C37-4684-9FEB-D4CE10C3E5CD"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "sichtbar/ViewControllers/PlanenVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
+            landmarkName = "onClickPlanSelect(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "4CD79442-9C37-4684-9FEB-D4CE10C3E5CD - 5afd7f899ab19be3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (sichtbar.CTIAPHandlerAlertType, Swift.Optional&lt;__C.SKProduct&gt;, Swift.Optional&lt;__C.SKPaymentTransaction&gt;) -&gt; () in closure #1 @Swift.MainActor () -&gt; () in sichtbar.PlanenVC.onClickPlanSelect(__C.UIButton) -&gt; ()"
+                  moduleName = "sichtbar"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/developer/Documents/MyProject/MyAlertsGit2022/sichtbar/ViewControllers/PlanenVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "92"
+                  endingLineNumber = "92"
+                  offsetFromSymbolStart = "392">
+               </Location>
+               <Location
+                  uuid = "4CD79442-9C37-4684-9FEB-D4CE10C3E5CD - 5afd7f899ab19be3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (sichtbar.CTIAPHandlerAlertType, Swift.Optional&lt;__C.SKProduct&gt;, Swift.Optional&lt;__C.SKPaymentTransaction&gt;) -&gt; () in closure #1 @Swift.MainActor () -&gt; () in sichtbar.PlanenVC.onClickPlanSelect(__C.UIButton) -&gt; ()"
+                  moduleName = "sichtbar"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/developer/Documents/MyProject/MyAlertsGit2022/sichtbar/ViewControllers/PlanenVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "92"
+                  endingLineNumber = "92"
+                  offsetFromSymbolStart = "420">
+               </Location>
+               <Location
+                  uuid = "4CD79442-9C37-4684-9FEB-D4CE10C3E5CD - 5afd7f899ab19be3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (sichtbar.CTIAPHandlerAlertType, Swift.Optional&lt;__C.SKProduct&gt;, Swift.Optional&lt;__C.SKPaymentTransaction&gt;) -&gt; () in closure #1 @Swift.MainActor () -&gt; () in sichtbar.PlanenVC.onClickPlanSelect(__C.UIButton) -&gt; ()"
+                  moduleName = "sichtbar"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/developer/Documents/MyProject/MyAlertsGit2022/sichtbar/ViewControllers/PlanenVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "92"
+                  endingLineNumber = "92"
+                  offsetFromSymbolStart = "472">
+               </Location>
+               <Location
+                  uuid = "4CD79442-9C37-4684-9FEB-D4CE10C3E5CD - 5afd7f899ab19be3"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (sichtbar.CTIAPHandlerAlertType, Swift.Optional&lt;__C.SKProduct&gt;, Swift.Optional&lt;__C.SKPaymentTransaction&gt;) -&gt; () in closure #1 @Swift.MainActor () -&gt; () in sichtbar.PlanenVC.onClickPlanSelect(__C.UIButton) -&gt; ()"
+                  moduleName = "sichtbar"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/developer/Documents/MyProject/MyAlertsGit2022/sichtbar/ViewControllers/PlanenVC.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "92"
+                  endingLineNumber = "92"
+                  offsetFromSymbolStart = "496">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9F625040-1229-4F28-8E31-5EF06F458FDD"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "sichtbar/ViewControllers/PlanenVC.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
+            landmarkName = "onClickPlanSelect(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

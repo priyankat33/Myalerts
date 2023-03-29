@@ -12,13 +12,17 @@ class GetProfileVC: UIViewController {
     @IBOutlet weak var lblName:UILabel!
     @IBOutlet weak var imgView:CustomImageView!
     @IBOutlet weak var lblEmail:UILabel!
+    @IBOutlet weak var firstname:UITextField!
+    @IBOutlet weak var lastName:UITextField!
+    
     fileprivate var selectedImageValue:Bool = false
     var image:UIImage = UIImage()
     var imagePicker = UIImagePickerController()
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
-        lblName.text = "\(userModel?.firstName ?? "") \(userModel?.lastName ?? "")"
+        firstname.text = "\(userModel?.firstName ?? "")"
+        lastName.text = "\(userModel?.lastName ?? "")"
         lblEmail.text = userModel?.email ?? ""
         // Do any additional setup after loading the view.
     }
@@ -47,11 +51,11 @@ class GetProfileVC: UIViewController {
 
     
     @IBAction func onClickEdit(_ sender:UIButton) {
-//        viewModel.editProfile(image: image, sender: self, onSuccess: {
-//
-//        }, onFailure: {
-//
-//        })
+        viewModel.editProfile(image: image,firstName: firstname.text ?? "", lastName: lastName.text ?? "" ,sender: self, onSuccess: {
+            self.navigationController?.popViewController(animated: true)
+        }, onFailure: {
+
+       })
     }
 }
 

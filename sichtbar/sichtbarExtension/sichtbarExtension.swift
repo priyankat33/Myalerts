@@ -136,7 +136,7 @@ extension UserDefaults {
         UserDefaults.standard.synchronize()
     }
     //Save no-premitive data
-    static func NTDefault( set codble:Mappable,forKey key:String){
+    static func NTDefault(set codble:Mappable,forKey key:String){
         
         if let encoded = codble.encoder() {
             let defaults = UserDefaults.standard

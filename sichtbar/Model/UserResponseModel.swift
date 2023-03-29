@@ -23,7 +23,24 @@ struct UserResponseModel:Mappable {
         status =   try values.decodeIfPresent(Int.self, forKey: .status)
     }
 }
-
+struct SignUpResponseModel:Mappable {
+   let status:Int?
+    let message : String?
+    let data:SignUpNewModel?
+    enum CodingKeys: String, CodingKey {
+       
+        case message = "message"
+        case status = "status"
+        case data = "data"
+    }
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        
+        message =   try values.decodeIfPresent(String.self, forKey: .message)
+        status =   try values.decodeIfPresent(Int.self, forKey: .status)
+        data = try values.decodeIfPresent(SignUpNewModel.self, forKey: .data)
+    }
+}
 
 struct UserResponseModel1:Mappable {
    let status:Int?
@@ -45,15 +62,34 @@ struct UserResponseModel1:Mappable {
 }
 
 
+struct SignUpNewModel:Mappable {
+   
+    let userId:Int?
+   
+    enum CodingKeys: String, CodingKey {
+       
+        case userId = "user_id"
+        
+        
+    }
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        
+        userId =   try values.decodeIfPresent(Int.self, forKey: .userId)
+       
+    }
+}
+
 struct ForgotModel:Mappable {
    
     let userId:String?
-    let firstName,lastname:String?
+    let firstName,lastname,email:String?
     enum CodingKeys: String, CodingKey {
        
         case userId = "id"
         case firstName =  "firstname"
         case lastname = "lastname"
+        case email = "email"
         
     }
     init(from decoder: Decoder) throws {
@@ -62,6 +98,7 @@ struct ForgotModel:Mappable {
         userId =   try values.decodeIfPresent(String.self, forKey: .userId)
         firstName =   try values.decodeIfPresent(String.self, forKey: .firstName)
         lastname = try values.decodeIfPresent(String.self, forKey: .lastname)
+        email = try values.decodeIfPresent(String.self, forKey: .email)
     }
 }
 

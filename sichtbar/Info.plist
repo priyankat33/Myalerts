@@ -13,6 +13,10 @@
 		<string>sf-ui-display-thin-58646e9b26e8b.otf</string>
 		<string>sf-ui-display-ultralight-58646b19bf205.otf</string>
 	</array>
+    <key>NSAppTransportSecurity</key>
+        <dict>
+        <key>NSAllowsArbitraryLoads</key><true/>
+    </dict>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

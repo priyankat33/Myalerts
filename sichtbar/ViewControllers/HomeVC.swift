@@ -40,7 +40,7 @@ class HomeVC: UIViewController {
             let combination = NSMutableAttributedString()
             combination.append(partOne)
             combination.append(partTwo)
-            lbl1.attributedText = combination
+            lbl1.text = firstName
         }
         // Do any additional setup after loading the view.
     }
@@ -343,11 +343,12 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
             let data = homeViewModel.cellForRowAtSearch(indexPath: indexPath)
             let vc = homeStoryboard.instantiateViewController(withIdentifier: "KPIDetailVC") as! KPIDetailVC
             vc.urlString = data.detail_link ?? ""
-            
+            vc.id = data.id ?? ""
             self.navigationController?.pushViewController(vc, animated: true)
         } else {
             let data = homeViewModel.homeModel[indexPath.row]
             let vc = homeStoryboard.instantiateViewController(withIdentifier: "KPIDetailVC") as! KPIDetailVC
+            vc.id = data.id ?? ""
             vc.urlString = data.detail_link ?? ""
             
             self.navigationController?.pushViewController(vc, animated: true)

@@ -40,7 +40,7 @@ class ProfileVC: UIViewController {
                 let combination = NSMutableAttributedString()
                 combination.append(partOne)
                 combination.append(partTwo)
-                self.lbl.attributedText = combination
+                self.lbl.text = userModel?.email
                 let code = userModel?.agency_code ?? ""
                 if code != "0" {
                     self.btnCode.setTitle("Agenturcode: \(userModel?.agency_code ?? "")", for: .normal)

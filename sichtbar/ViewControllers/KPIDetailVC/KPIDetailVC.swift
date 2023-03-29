@@ -9,6 +9,8 @@ import UIKit
 import WebKit
 class KPIDetailVC: UIViewController {
     var urlString:String = ""
+    var id:String = ""
+    fileprivate var homeViewModel:HomeViewModel = HomeViewModel()
     @IBOutlet weak var webView:WKWebView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +38,20 @@ class KPIDetailVC: UIViewController {
 
 extension KPIDetailVC: WKNavigationDelegate {
 
+    @IBAction func onClickDelete(_ sender:UIButton) {
+        
+        showAlertWithTwoActions(sender: self, message: "Möchten Sie es wirklich löschen?", title: "Ja", onSuccess: {
+            
+            
+            self.homeViewModel.deleteKpi(kpiId: self.id, sender: self, onSuccess: {
+                self.navigationController?.popViewController(animated: true)
+                
+            }, onFailure: {
+                
+            })
+        })
+    }
+    
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         showLoader(status: true)
     }

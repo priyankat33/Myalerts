@@ -38,8 +38,8 @@ class UserViewModel: NSObject {
                             let status = response.status ?? -999
                             if status == 1 {
                                 userID = response.data?.userId ?? ""
-                                firstName = response.data?.firstName ?? ""
-                                lastName = response.data?.lastname ?? ""
+                                firstName = response.data?.email ?? ""
+                                //lastName = response.data?.lastname ?? ""
                                 onSuccess()
                             } else {
                                 self.message = response.message ?? ""
@@ -129,82 +129,113 @@ class UserViewModel: NSObject {
     
     func editProfile(image:Any,firstName:String = "",lastName:String = "" ,sender:UIViewController,onSuccess:@escaping()->Void,onFailure:@escaping()->Void) {
         if  ServerManager.shared.CheckNetwork(sender: sender){
-            let array = self.set1(data: image)
-            if array.isEmpty{
-                 showLoader()
-                return
-           }
-           
-            let data = "&firstname=\(userModel?.firstName ?? "")&user_id=\(userID)&lastname=\(userModel?.lastName ?? "")"
+//            let array = self.set1(data: image)
+//            if array.isEmpty{
+//                 showLoader()
+//                return
+//           }
+            if firstName.isEmpty{
             
-            ServerManager.shared.httpUpload(request:  baseURL + API.kEditProfile + data , params: nil,headers: ServerManager.shared.apiHeaders,multipartObject: array, successHandler: { (responseData:Data,status)  in
-                DispatchQueue.main.async {
-                    showLoader()
-                    guard let response = responseData.decoder(UserResponseModel.self) else{return}
-                    
-                    switch status{
-                    case 200:
-                        onSuccess()
-                        break
-                    default:
-                        showAlertWithSingleAction(sender: sender, message: response.message ?? "")
-                        
-                        onFailure()
-                        break
-                    }
-                }
-            }, failureHandler: { (error) in
-                DispatchQueue.main.async {
-                    showLoader()
-                    showAlertWithSingleAction(sender: sender, message: error?.localizedDescription ?? "")
-                    onFailure()
-                }
-            })
-            
-        }
+                            showAlertWithSingleAction(sender:sender, message: ValidationMessage.kFirstName)
+                        }
+//            else if lastName.isEmpty{
+//            
+//                            showAlertWithSingleAction(sender:sender, message: ValidationMessage.kLastName)
+//                        }
+            else {
+                            let data = "&user_id=\(userID)&firstname=\(firstName )&lastname=\(lastName)"
+                            
+                            guard let urlString = data.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return  }
+                            ServerManager.shared.httpPost(request:  baseURL + API.kEditProfile + urlString , params: nil,headers: nil, successHandler: { (responseData:Data,status)  in
+                                DispatchQueue.main.async {
+                                    showLoader()
+                                    guard let response = responseData.decoder(UserResponseModel.self) else{return}
+                                 /**
+                                  let status = response.status ?? -999
+                                  if status == 1 {
+                                      onSuccess()
+                                  } else {
+                                      showAlertWithSingleAction(sender: sender, message: response.message ?? "")
+                                      onFailure()
+                                  }
+                                  */
+                                    switch status{
+                                    case 200:
+                                        let status = response.status ?? -999
+                                        if status == 1 {
+                                            showAlertWithSingleAction1(sender: sender, message: response.message ?? "", onSuccess: {
+                                                onSuccess()
+                                            })
+                                            
+                                        } else {
+                                            showAlertWithSingleAction(sender: sender, message: response.message ?? "")
+                                            onFailure()
+                                        }
+                                        
+                                        break
+                                    default:
+                                        showAlertWithSingleAction(sender: sender, message: response.message ?? "")
+                                        
+                                        onFailure()
+                                        break
+                                    }
+                                }
+                            }, failureHandler: { (error) in
+                                DispatchQueue.main.async {
+                                    showLoader()
+                                    showAlertWithSingleAction(sender: sender, message: error?.localizedDescription ?? "")
+                                    onFailure()
+                                }
+                            })
+                        }
+            }
     }
     
-    func signUp(agency_code:String = "",sender:UIViewController,email:String = "",password:String = "",confirmPassword:String = "",firstName:String = "",lastName:String = "",onSuccess:@escaping()->Void,onFailure:@escaping()->Void) {
+    func signUp(agency_code:String = "",sender:UIViewController,email:String = "",password:String = "",confirmPassword:String = "",lastName:String = "",onSuccess:@escaping()->Void,onFailure:@escaping()->Void) {
         if  ServerManager.shared.CheckNetwork(sender: sender){
-            if firstName.isEmpty{
-                
-                showAlertWithSingleAction(sender:sender, message: ValidationMessage.kFirstName)
-            } else if lastName.isEmpty{
-                
-                showAlertWithSingleAction(sender:sender, message: ValidationMessage.kLastName)
-            } else if email.isEmpty{
+//            if firstName.isEmpty{
+//
+//                showAlertWithSingleAction(sender:sender, message: ValidationMessage.kFirstName)
+//            } else if lastName.isEmpty{
+//
+//                showAlertWithSingleAction(sender:sender, message: ValidationMessage.kLastName)
+//            }
+             if email.isEmpty{
                 
                 showAlertWithSingleAction(sender:sender, message: ValidationMessage.kEmail)
             } else if !email.isEmail {
                 showAlertWithSingleAction(sender:sender, message: "Bitte gültige E-Mail-Adresse eingeben")
             }
-            else if password.isEmpty{
-                
-                showAlertWithSingleAction(sender:sender, message: ValidationMessage.kPassword)
-            } else if confirmPassword.isEmpty{
-                
-                showAlertWithSingleAction(sender:sender, message: ValidationMessage.kConfirmPassword)
-            } else if confirmPassword != password{
-                
-                showAlertWithSingleAction(sender:sender, message: ValidationMessage.kPasswordNotMatch)
-            }
+            
+//            else if password.isEmpty{
+//
+//                showAlertWithSingleAction(sender:sender, message: ValidationMessage.kPassword)
+//            } else if confirmPassword.isEmpty{
+//
+//                showAlertWithSingleAction(sender:sender, message: ValidationMessage.kConfirmPassword)
+//            } else if confirmPassword != password{
+//
+//                showAlertWithSingleAction(sender:sender, message: ValidationMessage.kPasswordNotMatch)
+//            }
             
             else {
                 
                 showLoader(status: true)
-                let data = "&email=\(email)&password=\(password)&firstname=\(firstName)&lastname=\(lastName)&agency_code=\(agency_code)"
+              
+                let data = "&email=\(email)&device_type=1"
                 guard let urlString = data.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return  }
-                ServerManager.shared.httpPost(request:  baseURL + API.kSignUp + urlString, params: nil,headers: nil, successHandler: { (responseData:Data,status)  in
-                    
+                ServerManager.shared.httpPost(request:  baseURL + API.kSignUpNew + urlString, params: nil,headers: nil, successHandler: { (responseData:Data,status)  in
                     
                     DispatchQueue.main.async {
                         showLoader()
-                        guard let response = responseData.decoder(UserResponseModel.self) else{return}
+                        guard let response = responseData.decoder(SignUpResponseModel.self) else{return}
                         
                         switch status {
                         case 200:
                             let status = response.status ?? -999
                             if status == 1 {
+                                userID = "\(response.data?.userId ?? 0)"
+                                firstName = email
                                 onSuccess()
                             } else {
                                 showAlertWithSingleAction(sender: sender, message: response.message ?? "")

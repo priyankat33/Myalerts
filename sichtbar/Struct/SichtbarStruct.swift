@@ -79,6 +79,7 @@ struct API {
     static let kChangePassword = "change_password"
     static let kEditProfile = "edit_profile"
     static let kSignUp     =   "signup"
+    static let kSignUpNew     =   "signup_new"
     static let kProfileInfo = "profile_info"
     static let kVerifyEmail     =   "verify_email"
     static let kResendOTP     =   "resend_otp"

@@ -15,7 +15,8 @@ class LoginVC: UIViewController {
     fileprivate var userViewModel:UserViewModel = UserViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
-         
+        let vc = mainStoryboard.instantiateViewController(withIdentifier: "SignUpVC") as! SignUpVC
+        self.navigationController?.pushViewController(vc, animated: true)
 //        if !isWalkThrough {
 //            
 //            let desiredStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -48,13 +49,13 @@ class LoginVC: UIViewController {
             SceneDelegate().setUpHome(self.view)
             
         }, onFailure: {
-            if self.userViewModel.message == "Your account is not active" {
-                let vc = mainStoryboard.instantiateViewController(withIdentifier: "OTPVerificationVC") as! OTPVerificationVC
-                vc.email = self.email.text ?? ""
-                self.navigationController?.pushViewController(vc, animated: true)
-            } else {
-                
-            }
+//            if self.userViewModel.message == "Your account is not active" {
+//                let vc = mainStoryboard.instantiateViewController(withIdentifier: "OTPVerificationVC") as! OTPVerificationVC
+//                vc.email = self.email.text ?? ""
+//                self.navigationController?.pushViewController(vc, animated: true)
+//            } else {
+//
+//            }
         })
     }
     /*
