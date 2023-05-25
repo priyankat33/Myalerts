@@ -41,9 +41,7 @@ extension KPIDetailVC: WKNavigationDelegate {
     @IBAction func onClickDelete(_ sender:UIButton) {
         
         showAlertWithTwoActions(sender: self, message: "Möchten Sie es wirklich löschen?", title: "Ja", onSuccess: {
-            
-            
-            self.homeViewModel.deleteKpi(kpiId: self.id, sender: self, onSuccess: {
+             self.homeViewModel.deleteKpi(kpiId: self.id, sender: self, onSuccess: {
                 self.navigationController?.popViewController(animated: true)
                 
             }, onFailure: {

@@ -97,9 +97,7 @@ class HomeViewModel: NSObject {
                                 self.package = response.package ?? ""
                                     showAlertWithSingleAction(sender: sender, message: response.message ?? "")
                                     onFailure()
-                               
-                                
-                            }
+                             }
                             
                             break
                         default:

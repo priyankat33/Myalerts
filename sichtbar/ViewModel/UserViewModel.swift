@@ -221,8 +221,8 @@ class UserViewModel: NSObject {
             else {
                 
                 showLoader(status: true)
-              
-                let data = "&email=\(email)&device_type=1"
+                
+                let data = "&email=\(email)&device_type=1&device_token=\(deviceTokenNew)&fcm_device_token=\(fcmToken)"
                 guard let urlString = data.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return  }
                 ServerManager.shared.httpPost(request:  baseURL + API.kSignUpNew + urlString, params: nil,headers: nil, successHandler: { (responseData:Data,status)  in
                     
@@ -533,9 +533,6 @@ class UserViewModel: NSObject {
                 showLoader(status: true)
                 
                 ServerManager.shared.httpPost(request:  baseURL + API.kForgotPassword + data, params: nil,headers: nil, successHandler: { (responseData:Data,status)  in
-                    
-                    
-                    
                     DispatchQueue.main.async {
                         showLoader()
                         guard let response = responseData.decoder(UserResponseModel1.self) else{return}
@@ -588,38 +585,48 @@ class UserViewModel: NSObject {
            return [dataFormate.result(dataType: dataType) as! MultipartData]
        }
     
-    //    func logout(sender:UIViewController,onSuccess:@escaping()->Void,onFailure:@escaping()->Void) {
-    //        if  ServerManager.shared.CheckNetwork(sender: sender){
-    //
-    //
-    //            showLoader(status: true)
-    //            ServerManager.shared.httpPost(request:  baseURL + API.kLogout, params: nil,headers: ServerManager.shared.apiHeaders, successHandler: { (responseData:Data,status)  in
-    //
-    //                DispatchQueue.main.async {
-    //                    showLoader()
-    //                    guard let response = responseData.decoder(PunchStatusModel.self) else{return}
-    //
-    //                    switch status{
-    //                    case 200:
-    //
-    //                        onSuccess()
-    //                        break
-    //                    default:
-    //                        showAlertWithSingleAction(sender: sender, message: response.message ?? "")
-    //
-    //                        onFailure()
-    //                        break
-    //                    }
-    //                }
-    //            }, failureHandler: { (error) in
-    //                DispatchQueue.main.async {
-    //                    showLoader()
-    //                    showAlertWithSingleAction(sender: sender, message: error?.localizedDescription ?? "")
-    //                    onFailure()
-    //                }
-    //            })
-    //
-    //        }
-    //    }
+        func logout(sender:UIViewController,onSuccess:@escaping()->Void,onFailure:@escaping()->Void) {
+            if  ServerManager.shared.CheckNetwork(sender: sender){
+    
+                let data = "&user_id=\(userID)"
+                guard let urlString = data.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { return  }
+                showLoader(status: true)
+                ServerManager.shared.httpPost(request:  baseURL + API.kLogout + urlString, params: nil,headers: nil, successHandler: { (responseData:Data,status)  in
+                    
+                    
+                    DispatchQueue.main.async {
+                        showLoader()
+                        guard let response = responseData.decoder(UserResponseModel2.self) else{return}
+                        
+                        switch status {
+                        case 200:
+                            let status = response.status ?? -999
+                            if status == 1 {
+                                userModel = response.data
+                                
+                                onSuccess()
+                            } else {
+                                showAlertWithSingleAction(sender: sender, message: response.message ?? "")
+                                onFailure()
+                            }
+                            
+                            break
+                        default:
+                            showAlertWithSingleAction(sender: sender, message: response.message ?? "")
+                            
+                            onFailure()
+                            break
+                        }
+                    }
+                }, failureHandler: { (error) in
+                    DispatchQueue.main.async {
+                        showLoader()
+                        showAlertWithSingleAction(sender: sender, message: error?.localizedDescription ?? "")
+                        onFailure()
+                    }
+                })
+    
+            }
+        }
 }
 

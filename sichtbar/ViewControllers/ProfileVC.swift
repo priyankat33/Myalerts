@@ -77,7 +77,14 @@ class ProfileVC: UIViewController {
     
     @IBAction func onClickLogout(_ sender: UIButton) {
         showAlertWithTwoActions(sender: self,message: "Are you sure you want to Ausloggen?",title: "Ausloggen", onSuccess: {
-            SceneDelegate().logout(self.view)
+            
+            self.userViewModel.logout(sender: self, onSuccess: {
+                SceneDelegate().logout(self.view)
+            }, onFailure: {
+                
+            })
+            
+            
         })
       }
     

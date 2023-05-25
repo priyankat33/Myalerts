@@ -2058,7 +2058,9 @@ Mehr Alerts und User auf Anfrage</string>
         <designable name="U4C-7N-9Qw">
             <size key="intrinsicContentSize" width="33.333333333333336" height="33.333333333333336"/>
         </designable>
-        <designable name="bCM-pt-Jde"/>
+        <designable name="bCM-pt-Jde">
+            <size key="intrinsicContentSize" width="8" height="0.0"/>
+        </designable>
     </designables>
     <inferredMetricsTieBreakers>
         <segue reference="Dhl-vJ-d9i"/>
