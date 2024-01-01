@@ -231,7 +231,13 @@ struct HomeModel:Mappable {
         id = try values.decodeIfPresent(String.self, forKey: .id)
         kpi_type = try values.decodeIfPresent(String.self, forKey: .kpi_type)
         kpi_icon_link = try values.decodeIfPresent(String.self, forKey: .kpi_icon_link)
-        kpi_score = try values.decodeIfPresent(String.self, forKey: .kpi_score)
+        do {
+            let value = try values.decodeIfPresent(Int.self, forKey: .kpi_score)
+            kpi_score = "\(value ?? 0)"
+        } catch DecodingError.typeMismatch {
+            kpi_score = try values.decodeIfPresent(String.self, forKey: .kpi_score)
+        }
+        
         kpi_name = try values.decodeIfPresent(String.self, forKey: .kpi_name)
         keyword = try values.decodeIfPresent(String.self, forKey: .keyword)
         business_name = try values.decodeIfPresent(String.self, forKey: .business_name)

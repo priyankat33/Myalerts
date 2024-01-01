@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import StoreKit
 class HomeVC: UIViewController {
     @IBOutlet weak var lbl:UILabel!
     @IBOutlet weak var lbl1:UILabel!
@@ -21,6 +22,19 @@ class HomeVC: UIViewController {
     fileprivate var homeViewModel:HomeViewModel = HomeViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
+        let userDefaults = UserDefaults.standard
+        let key = "nbTimesAppOpened"
+        userDefaults.set(userDefaults.integer(forKey: key) + 1, forKey: key)
+         userDefaults.synchronize()
+        if userDefaults.integer(forKey: key) % 5 == 0 {
+            if #available(iOS 14.0, *) {
+                    if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                        SKStoreReviewController.requestReview(in: scene)
+                    }
+                } else if #available(iOS 10.3, *) {
+                    SKStoreReviewController.requestReview()
+                }
+        }
         if let font = UIFont(name: "SFUIDisplay-Bold", size: 26) {
             let yourAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: font]
             let yourOtherAttributes = [NSAttributedString.Key.foregroundColor: CustomColor.appThemeColorGreen, NSAttributedString.Key.font: font]
@@ -236,7 +250,8 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTVC", for: indexPath) as! HomeTVC
         if searchActive {
             let data = homeViewModel.cellForRowAtSearch(indexPath: indexPath)
-            cell.lbl1.text = data.kpi_name ?? ""
+            cell.lbl1.text =  data.kpi_title ?? ""
+            cell.lbl.text = data.kpi_name ?? ""
             cell.scoreLbl.text = "\(data.kpi_score ?? "")"
             cell.imgView.kf.setImage(with: URL(string: data.kpi_icon_link ?? ""), placeholder: nil, options: nil) { result in
                 switch result {
@@ -255,7 +270,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
                 }
             }
             cell.delteBtn.tag = indexPath.row
-            cell.lbl.text = data.kpi_title ?? ""
+            
             //            if data.kpi_type == "1" {
             //                cell.lbl.text = data.domain ?? ""
             //
@@ -284,7 +299,8 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
             //            }
         } else {
             let data = homeViewModel.homeModel[indexPath.row]
-            cell.lbl1.text = data.kpi_name ?? ""
+            cell.lbl1.text = data.kpi_title ?? ""
+            cell.lbl.text = data.kpi_name ?? ""
             cell.scoreLbl.text = "\(data.kpi_score ?? "")"
             cell.imgView.kf.setImage(with: URL(string: data.kpi_icon_link ?? ""), placeholder: nil, options: nil) { result in
                 switch result {
@@ -303,7 +319,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
                 }
             }
             cell.delteBtn.tag = indexPath.row
-            cell.lbl.text = data.kpi_title ?? ""
+            
             //            if data.kpi_type == "1" {
             //                cell.lbl.text = data.domain ?? ""
             ////                cell.lbl1.text = "Domain Score"

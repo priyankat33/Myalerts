@@ -32,7 +32,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SKPaymentTransactionObs
                     self.window?.rootViewController = nil
                 }
                 if  let loginNavigationController : UITabBarController = self.getController(name:"TabBarController", storyBoard: homeStoryboard) as? UITabBarController {
-             
+                    
+                    
                  self.window?.rootViewController = loginNavigationController
                  self.window?.makeKeyAndVisible()
              }
@@ -82,14 +83,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SKPaymentTransactionObs
 }
 
 extension SceneDelegate {
-    func logout(_ view: UIView){
+    func logout(_ view: UIView) {
         DispatchQueue.main.async {
-
-UserDefaults.NTDefault(removeObjectForKey: kUserId)
-
- self.setUpLogin(view)
+            UserDefaults.NTDefault(removeObjectForKey: kUserId)
+            UserDefaults.NTDefault(removeObjectForKey: "nbTimesAppOpened")
+            self.setUpLogin(view)
         }
-       
     }
     
     func setUpHome(_ view: UIView)

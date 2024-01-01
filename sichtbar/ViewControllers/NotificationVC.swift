@@ -54,7 +54,21 @@ extension NotificationVC: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TypeTVC1", for: indexPath) as! TypeTVC1
         let data = homeViewModel.notificationModel[indexPath.row]
         cell.lbl.text = data.title ?? ""
-        cell.lblDesc.text = data.message ?? ""
+        
+        let string = data.message ?? ""
+        if let index = string.lastIndex(of: " ") {
+            
+            let firstPart = string.suffix(from: index)
+            if String(firstPart).trimWhiteSpace.isInt {
+                var range = (string as NSString).range(of: String(firstPart))
+                var attributedString = NSMutableAttributedString(string:string)
+                attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.red , range: range)
+                cell.lblDesc.attributedText = attributedString
+            } else {
+                cell.lblDesc.text = string
+            }
+            
+        }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
@@ -68,4 +82,10 @@ extension NotificationVC: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+}
+
+extension String {
+    var isInt: Bool {
+        return Float(self) != nil
+    }
 }
