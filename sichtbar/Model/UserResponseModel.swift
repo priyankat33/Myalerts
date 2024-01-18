@@ -102,10 +102,10 @@ struct ForgotModel:Mappable {
     }
 }
 
-struct PlanModel:Mappable {
+struct PlanModel: Mappable {
    
    
-    let package_id:String?
+    var package_id:String?
     enum CodingKeys: String, CodingKey {
        
         case package_id = "package_id"
@@ -115,7 +115,13 @@ struct PlanModel:Mappable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
-        package_id =   try values.decodeIfPresent(String.self, forKey: .package_id)
+        //package_id =   try values.decodeIfPresent(String.self, forKey: .package_id)
+        do {
+            let value = try values.decodeIfPresent(Int.self, forKey: .package_id)
+            package_id = "\(value ?? 0)"
+        } catch DecodingError.typeMismatch {
+            package_id = try values.decodeIfPresent(String.self, forKey: .package_id)
+        }
        
     }
 }

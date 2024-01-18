@@ -52,6 +52,7 @@ class HomeVC: UIViewController {
             let partOne = NSMutableAttributedString(string: "\(firstName) ", attributes: yourAttributes)
             let partTwo = NSMutableAttributedString(string: lastName, attributes: yourOtherAttributes)
             let combination = NSMutableAttributedString()
+            
             combination.append(partOne)
             combination.append(partTwo)
             lbl1.text = firstName
