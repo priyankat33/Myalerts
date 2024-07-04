@@ -73,7 +73,6 @@ class HomeViewModel: NSObject {
     func getKpi(page:Int = 1,sender:UIViewController,onSuccess:@escaping()->Void,onFailure:@escaping()->Void) {
         if  ServerManager.shared.CheckNetwork(sender: sender){
 
-           ///let params:[String:Any] = ["user_email":email,"user_pass":password]
                 showLoader(status: true)
                 let data = "&user_id=\(userID)&page=\(1)"
                 
@@ -97,9 +96,7 @@ class HomeViewModel: NSObject {
                                 self.package = response.package ?? ""
                                     showAlertWithSingleAction(sender: sender, message: response.message ?? "")
                                     onFailure()
-                               
-                                
-                            }
+                             }
                             
                             break
                         default:

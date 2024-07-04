@@ -26,11 +26,12 @@ class SignUpVC: UIViewController {
     }
     
     @IBAction func onClickSignUp(_ sender: UIButton) {
-        userViewModel.signUp(agency_code:code.text ?? "",sender: self, email: email.text ?? "", password: password.text ?? "", confirmPassword: confirmPassword.text ?? "", firstName: firstName.text ?? "", lastName: latName.text  ?? "", onSuccess: {
+        userViewModel.signUp(agency_code:code.text ?? "",sender: self, email: email.text ?? "", password: password.text ?? "", confirmPassword: confirmPassword.text ?? "", lastName: latName.text  ?? "", onSuccess: {
             
-            let vc = mainStoryboard.instantiateViewController(withIdentifier: "OTPVerificationVC") as! OTPVerificationVC
-            vc.email = self.email.text ?? ""
-            self.navigationController?.pushViewController(vc, animated: true)
+//            let vc = mainStoryboard.instantiateViewController(withIdentifier: "OTPVerificationVC") as! OTPVerificationVC
+//            vc.email = self.email.text ?? ""
+//            self.navigationController?.pushViewController(vc, animated: true)
+            SceneDelegate().setUpHome(self.view)
         }, onFailure: {
             
         })

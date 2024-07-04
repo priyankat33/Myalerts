@@ -64,7 +64,7 @@ struct API {
     static let kAddKpi      =   "add_kpi"
     static let kKpiTypesListing      =   "kpi_types_listing"
     
-
+    
     static let kKpiListing =  "kpi_listing"
     static let kNotification =  "get_notifications"
     static let kMarkNotificationSeen =  "mark_notification_seen"
@@ -79,10 +79,14 @@ struct API {
     static let kChangePassword = "change_password"
     static let kEditProfile = "edit_profile"
     static let kSignUp     =   "signup"
+    static let kSignUpNew     =   "signup_new"
     static let kProfileInfo = "profile_info"
     static let kVerifyEmail     =   "verify_email"
     static let kResendOTP     =   "resend_otp"
     static let kVerifyAgencyCode     =   "verify_agency_code"
     static let kAgencyCodeLabel     =   "agency_code_label"
+    static let kDeleteAccount = "delete_my_account"
+    static let kLogout = "remove_device_token"
+    
     
 }

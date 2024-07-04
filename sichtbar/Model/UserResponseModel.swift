@@ -23,7 +23,24 @@ struct UserResponseModel:Mappable {
         status =   try values.decodeIfPresent(Int.self, forKey: .status)
     }
 }
-
+struct SignUpResponseModel:Mappable {
+   let status:Int?
+    let message : String?
+    let data:SignUpNewModel?
+    enum CodingKeys: String, CodingKey {
+       
+        case message = "message"
+        case status = "status"
+        case data = "data"
+    }
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        
+        message =   try values.decodeIfPresent(String.self, forKey: .message)
+        status =   try values.decodeIfPresent(Int.self, forKey: .status)
+        data = try values.decodeIfPresent(SignUpNewModel.self, forKey: .data)
+    }
+}
 
 struct UserResponseModel1:Mappable {
    let status:Int?
@@ -45,15 +62,34 @@ struct UserResponseModel1:Mappable {
 }
 
 
+struct SignUpNewModel:Mappable {
+   
+    let userId:Int?
+   
+    enum CodingKeys: String, CodingKey {
+       
+        case userId = "user_id"
+        
+        
+    }
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        
+        userId =   try values.decodeIfPresent(Int.self, forKey: .userId)
+       
+    }
+}
+
 struct ForgotModel:Mappable {
    
     let userId:String?
-    let firstName,lastname:String?
+    let firstName,lastname,email:String?
     enum CodingKeys: String, CodingKey {
        
         case userId = "id"
         case firstName =  "firstname"
         case lastname = "lastname"
+        case email = "email"
         
     }
     init(from decoder: Decoder) throws {
@@ -62,13 +98,14 @@ struct ForgotModel:Mappable {
         userId =   try values.decodeIfPresent(String.self, forKey: .userId)
         firstName =   try values.decodeIfPresent(String.self, forKey: .firstName)
         lastname = try values.decodeIfPresent(String.self, forKey: .lastname)
+        email = try values.decodeIfPresent(String.self, forKey: .email)
     }
 }
 
-struct PlanModel:Mappable {
+struct PlanModel: Mappable {
    
    
-    let package_id:String?
+    var package_id:String?
     enum CodingKeys: String, CodingKey {
        
         case package_id = "package_id"
@@ -78,7 +115,13 @@ struct PlanModel:Mappable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
-        package_id =   try values.decodeIfPresent(String.self, forKey: .package_id)
+        //package_id =   try values.decodeIfPresent(String.self, forKey: .package_id)
+        do {
+            let value = try values.decodeIfPresent(Int.self, forKey: .package_id)
+            package_id = "\(value ?? 0)"
+        } catch DecodingError.typeMismatch {
+            package_id = try values.decodeIfPresent(String.self, forKey: .package_id)
+        }
        
     }
 }
@@ -194,7 +237,13 @@ struct HomeModel:Mappable {
         id = try values.decodeIfPresent(String.self, forKey: .id)
         kpi_type = try values.decodeIfPresent(String.self, forKey: .kpi_type)
         kpi_icon_link = try values.decodeIfPresent(String.self, forKey: .kpi_icon_link)
-        kpi_score = try values.decodeIfPresent(String.self, forKey: .kpi_score)
+        do {
+            let value = try values.decodeIfPresent(Int.self, forKey: .kpi_score)
+            kpi_score = "\(value ?? 0)"
+        } catch DecodingError.typeMismatch {
+            kpi_score = try values.decodeIfPresent(String.self, forKey: .kpi_score)
+        }
+        
         kpi_name = try values.decodeIfPresent(String.self, forKey: .kpi_name)
         keyword = try values.decodeIfPresent(String.self, forKey: .keyword)
         business_name = try values.decodeIfPresent(String.self, forKey: .business_name)
@@ -272,10 +321,10 @@ struct NotificationResponseModel:Mappable {
 
 struct NotificationModel:Mappable {
    
-    let title, created, message:String?
+    let title, created, message, id, view_link:String?
    
     enum CodingKeys: String, CodingKey {
-       case title, created, message
+       case title, created, message, id, view_link
         
     }
     init(from decoder: Decoder) throws {
@@ -284,6 +333,7 @@ struct NotificationModel:Mappable {
         title =   try values.decodeIfPresent(String.self, forKey: .title)
         created =   try values.decodeIfPresent(String.self, forKey: .created)
         message =   try values.decodeIfPresent(String.self, forKey: .message)
-        
+        id =   try values.decodeIfPresent(String.self, forKey: .id)
+        view_link =   try values.decodeIfPresent(String.self, forKey: .view_link)
     }
 }

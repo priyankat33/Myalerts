@@ -35,7 +35,7 @@ class PlanenVC: UIViewController {
         homeViewModel.getPackageDetail(sender: self, onSuccess: {
             
             if self.homeViewModel.package_id  == "1" {
-                self.planLbl.text = "gehen sie premium"
+                self.planLbl.text = "Upgrade Preis"
             } else if  self.homeViewModel.package_id == "2" {
                 self.planLbl.text = "Marketeer Version"
             } else if  self.homeViewModel.package_id == "3" {

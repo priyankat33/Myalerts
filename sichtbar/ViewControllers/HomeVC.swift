@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import StoreKit
 class HomeVC: UIViewController {
     @IBOutlet weak var lbl:UILabel!
     @IBOutlet weak var lbl1:UILabel!
@@ -21,6 +22,19 @@ class HomeVC: UIViewController {
     fileprivate var homeViewModel:HomeViewModel = HomeViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
+        let userDefaults = UserDefaults.standard
+        let key = "nbTimesAppOpened"
+        userDefaults.set(userDefaults.integer(forKey: key) + 1, forKey: key)
+         userDefaults.synchronize()
+        if userDefaults.integer(forKey: key) % 5 == 0 {
+            if #available(iOS 14.0, *) {
+                    if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                        SKStoreReviewController.requestReview(in: scene)
+                    }
+                } else if #available(iOS 10.3, *) {
+                    SKStoreReviewController.requestReview()
+                }
+        }
         if let font = UIFont(name: "SFUIDisplay-Bold", size: 26) {
             let yourAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: font]
             let yourOtherAttributes = [NSAttributedString.Key.foregroundColor: CustomColor.appThemeColorGreen, NSAttributedString.Key.font: font]
@@ -38,21 +52,31 @@ class HomeVC: UIViewController {
             let partOne = NSMutableAttributedString(string: "\(firstName) ", attributes: yourAttributes)
             let partTwo = NSMutableAttributedString(string: lastName, attributes: yourOtherAttributes)
             let combination = NSMutableAttributedString()
+            
             combination.append(partOne)
             combination.append(partTwo)
-            lbl1.attributedText = combination
+            lbl1.text = firstName
         }
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+                NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("NotificationIdentifier"), object: nil)
         getKpi()
     }
     
+    
+    @objc func methodOfReceivedNotification(notification: Notification) {
+        getKpi()
+    }
+    
+    
+    
+    
     private func getKpi() {
         homeViewModel.getKpi(page: 1, sender: self,  onSuccess: { [self] in
-            if self.homeViewModel.package == "2" || self.homeViewModel.package == "1"{
+            if self.homeViewModel.package == "2" || self.homeViewModel.package == "1" {
                 self.heightConstraint.constant = 210
                 self.upgradePlan.isHidden = false
             } else {
@@ -68,10 +92,12 @@ class HomeVC: UIViewController {
                 self.notificationLbl.isHidden = true
                 
             } else {
+                
                 self.notificationLbl.text = self.homeViewModel.notification_count
-                let objToBeSent = "2"
-                NotificationCenter.default.post(name: Notification.Name("NotificationIdentifier"), object: objToBeSent)
+                //let objToBeSent = "\(self.homeViewModel.notification_count)"
+               // NotificationCenter.default.post(name: Notification.Name("NotificationIdentifier"), object: objToBeSent)
                 self.notificationLbl.isHidden = true
+                self.navigationController!.tabBarController?.tabBar.items?[1].badgeValue = "\(self.homeViewModel.notification_count)"
             }
             //            self.receiptValidation()
         }, onFailure: {
@@ -225,7 +251,8 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeTVC", for: indexPath) as! HomeTVC
         if searchActive {
             let data = homeViewModel.cellForRowAtSearch(indexPath: indexPath)
-            cell.lbl1.text = data.kpi_name ?? ""
+            cell.lbl1.text =  data.kpi_title ?? ""
+            cell.lbl.text = data.kpi_name ?? ""
             cell.scoreLbl.text = "\(data.kpi_score ?? "")"
             cell.imgView.kf.setImage(with: URL(string: data.kpi_icon_link ?? ""), placeholder: nil, options: nil) { result in
                 switch result {
@@ -244,7 +271,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
                 }
             }
             cell.delteBtn.tag = indexPath.row
-            cell.lbl.text = data.kpi_title ?? ""
+            
             //            if data.kpi_type == "1" {
             //                cell.lbl.text = data.domain ?? ""
             //
@@ -273,7 +300,8 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
             //            }
         } else {
             let data = homeViewModel.homeModel[indexPath.row]
-            cell.lbl1.text = data.kpi_name ?? ""
+            cell.lbl1.text = data.kpi_title ?? ""
+            cell.lbl.text = data.kpi_name ?? ""
             cell.scoreLbl.text = "\(data.kpi_score ?? "")"
             cell.imgView.kf.setImage(with: URL(string: data.kpi_icon_link ?? ""), placeholder: nil, options: nil) { result in
                 switch result {
@@ -292,7 +320,7 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
                 }
             }
             cell.delteBtn.tag = indexPath.row
-            cell.lbl.text = data.kpi_title ?? ""
+            
             //            if data.kpi_type == "1" {
             //                cell.lbl.text = data.domain ?? ""
             ////                cell.lbl1.text = "Domain Score"
@@ -332,11 +360,12 @@ extension HomeVC: UITableViewDelegate, UITableViewDataSource {
             let data = homeViewModel.cellForRowAtSearch(indexPath: indexPath)
             let vc = homeStoryboard.instantiateViewController(withIdentifier: "KPIDetailVC") as! KPIDetailVC
             vc.urlString = data.detail_link ?? ""
-            
+            vc.id = data.id ?? ""
             self.navigationController?.pushViewController(vc, animated: true)
         } else {
             let data = homeViewModel.homeModel[indexPath.row]
             let vc = homeStoryboard.instantiateViewController(withIdentifier: "KPIDetailVC") as! KPIDetailVC
+            vc.id = data.id ?? ""
             vc.urlString = data.detail_link ?? ""
             
             self.navigationController?.pushViewController(vc, animated: true)

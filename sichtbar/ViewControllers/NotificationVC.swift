@@ -13,18 +13,22 @@ class NotificationVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-       
     }
     
     @objc func methodOfReceivedNotification(notification: Notification) {
             print("Value of notification : ", notification.object ?? "")
-        self.navigationController!.tabBarItem.badgeValue = "\(notification.object ?? "")"
+        let count = notification.object as? String ?? ""
+        if count != "0" {
+            self.navigationController!.tabBarItem.badgeValue = "\(count)"
+        } else {
+            self.navigationController!.tabBarItem.badgeValue = nil
         }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("NotificationIdentifier"), object: nil)
-        
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.methodOfReceivedNotification(notification:)), name: Notification.Name("NotificationIdentifier"), object: nil)
+//
         homeViewModel.getNotification(page: 1, sender: self, onSuccess: {
             if self.homeViewModel.notificationModel.count > 0 {
                 self.tableView.reloadData()
@@ -34,22 +38,11 @@ class NotificationVC: UIViewController {
         })
         
         homeViewModel.markNotification(sender: self, onSuccess: {
-            
+            self.navigationController!.tabBarItem.badgeValue = nil
         }, onFailure: {
             
         })
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
 
 extension NotificationVC: UITableViewDataSource, UITableViewDelegate {
@@ -61,7 +54,21 @@ extension NotificationVC: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TypeTVC1", for: indexPath) as! TypeTVC1
         let data = homeViewModel.notificationModel[indexPath.row]
         cell.lbl.text = data.title ?? ""
-        cell.lblDesc.text = data.message ?? ""
+        
+        let string = data.message ?? ""
+        if let index = string.lastIndex(of: " ") {
+            
+            let firstPart = string.suffix(from: index)
+            if String(firstPart).trimWhiteSpace.isInt {
+                var range = (string as NSString).range(of: String(firstPart))
+                var attributedString = NSMutableAttributedString(string:string)
+                attributedString.addAttribute(NSAttributedString.Key.foregroundColor, value: UIColor.red , range: range)
+                cell.lblDesc.attributedText = attributedString
+            } else {
+                cell.lblDesc.text = string
+            }
+            
+        }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
@@ -75,4 +82,19 @@ extension NotificationVC: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let data = homeViewModel.notificationModel[indexPath.row]
+        let vc = homeStoryboard.instantiateViewController(withIdentifier: "KPIDetailVC") as! KPIDetailVC
+        vc.id = data.id ?? ""
+        vc.urlString = data.view_link ?? ""
+        vc.isFromNotifcation = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+}
+
+extension String {
+    var isInt: Bool {
+        return Float(self) != nil
+    }
 }

@@ -15,15 +15,16 @@ class LoginVC: UIViewController {
     fileprivate var userViewModel:UserViewModel = UserViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
-         
-        if !isWalkThrough {
-            
-            let desiredStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            if let tabbar = (desiredStoryboard.instantiateViewController(withIdentifier: "WalkThroughVC") as? WalkThroughVC) {
-                tabbar.modalPresentationStyle = .fullScreen
-                self.present(tabbar, animated: false, completion: nil)
-            }
-        }
+        let vc = mainStoryboard.instantiateViewController(withIdentifier: "SignUpVC") as! SignUpVC
+        self.navigationController?.pushViewController(vc, animated: true)
+//        if !isWalkThrough {
+//            
+//            let desiredStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//            if let walkThroughVC = (desiredStoryboard.instantiateViewController(withIdentifier: "WalkThroughVC") as? WalkThroughVC) {
+//                walkThroughVC.modalPresentationStyle = .fullScreen
+//                self.present(walkThroughVC, animated: false, completion: nil)
+//            }
+//        }
         
         if let font = UIFont(name: "SFUIDisplay-Bold", size: 26) {
             let yourAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: font]
@@ -48,13 +49,13 @@ class LoginVC: UIViewController {
             SceneDelegate().setUpHome(self.view)
             
         }, onFailure: {
-            if self.userViewModel.message == "Your account is not active" {
-                let vc = mainStoryboard.instantiateViewController(withIdentifier: "OTPVerificationVC") as! OTPVerificationVC
-                vc.email = self.email.text ?? ""
-                self.navigationController?.pushViewController(vc, animated: true)
-            } else {
-                
-            }
+//            if self.userViewModel.message == "Your account is not active" {
+//                let vc = mainStoryboard.instantiateViewController(withIdentifier: "OTPVerificationVC") as! OTPVerificationVC
+//                vc.email = self.email.text ?? ""
+//                self.navigationController?.pushViewController(vc, animated: true)
+//            } else {
+//
+//            }
         })
     }
     /*
