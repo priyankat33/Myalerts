@@ -82,6 +82,15 @@ extension NotificationVC: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let data = homeViewModel.notificationModel[indexPath.row]
+        let vc = homeStoryboard.instantiateViewController(withIdentifier: "KPIDetailVC") as! KPIDetailVC
+        vc.id = data.id ?? ""
+        vc.urlString = data.view_link ?? ""
+        vc.isFromNotifcation = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
 }
 
 extension String {

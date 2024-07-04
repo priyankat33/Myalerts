@@ -321,10 +321,10 @@ struct NotificationResponseModel:Mappable {
 
 struct NotificationModel:Mappable {
    
-    let title, created, message:String?
+    let title, created, message, id, view_link:String?
    
     enum CodingKeys: String, CodingKey {
-       case title, created, message
+       case title, created, message, id, view_link
         
     }
     init(from decoder: Decoder) throws {
@@ -333,6 +333,7 @@ struct NotificationModel:Mappable {
         title =   try values.decodeIfPresent(String.self, forKey: .title)
         created =   try values.decodeIfPresent(String.self, forKey: .created)
         message =   try values.decodeIfPresent(String.self, forKey: .message)
-        
+        id =   try values.decodeIfPresent(String.self, forKey: .id)
+        view_link =   try values.decodeIfPresent(String.self, forKey: .view_link)
     }
 }

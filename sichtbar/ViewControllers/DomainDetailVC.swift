@@ -7,14 +7,19 @@
 
 import UIKit
 import WebKit
+enum NavigateFrom {
+    case notification
+    case domaindetail
+}
 class DomainDetailVC: UIViewController {
     var id:String = ""
     @IBOutlet weak var webView:WKWebView!
     @IBOutlet weak var lbl:UILabel!
     var headingName:String = ""
+    var navigateFrom: NavigateFrom = .domaindetail
     override func viewDidLoad() {
         super.viewDidLoad()
-        let myURLString = "https://web.my-alerts.app/dashboard/add-kpi?user_id=\(userID)&kpi_type=\(id)&mobile=true"
+        let myURLString = navigateFrom == .domaindetail ? "https://web.my-alerts.app/dashboard/add-kpi?user_id=\(userID)&kpi_type=\(id)&mobile=true" : "https://web.my-alerts.app/dashboard/benachrichtigung-detail?id=\(id)&user_id=\(userID)&mobile=true"
         let url = URL(string: myURLString)
         let request = URLRequest(url: url!)
         lbl.text = headingName

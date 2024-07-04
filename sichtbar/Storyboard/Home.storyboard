@@ -794,29 +794,29 @@
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TypeTVC1" id="tie-d0-Var" customClass="TypeTVC1" customModule="sichtbar" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="300" height="51.5"/>
+                                        <rect key="frame" x="0.0" y="50" width="300" height="50.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tie-d0-Var" id="oW9-Kf-sVO">
-                                            <rect key="frame" x="0.0" y="0.0" width="300" height="51.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="50.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2JF-7k-vKN">
-                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="51.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="50.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="DomainScore" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DwP-FG-oWt">
-                                                            <rect key="frame" x="20" y="5" width="175" height="18"/>
+                                                            <rect key="frame" x="20" y="5" width="173" height="17.5"/>
                                                             <fontDescription key="fontDescription" name="SFUIDisplay-Bold" family="SF UI Display" pointSize="15"/>
                                                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="DomainScore" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3wB-n9-Obb">
-                                                            <rect key="frame" x="20" y="28" width="175" height="18.5"/>
+                                                            <rect key="frame" x="20" y="27.5" width="173" height="18"/>
                                                             <fontDescription key="fontDescription" name="SFUIDisplay-Medium" family="SF UI Display" pointSize="15"/>
                                                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="22/01/1991" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sry-q1-7Ko">
-                                                            <rect key="frame" x="205" y="17" width="75" height="18"/>
+                                                            <rect key="frame" x="203" y="16.5" width="77" height="18"/>
                                                             <fontDescription key="fontDescription" name="SFUIDisplay-Medium" family="SF UI Display" pointSize="15"/>
                                                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -2043,6 +2043,7 @@ Mehr Alerts und User auf Anfrage</string>
                     </view>
                     <navigationItem key="navigationItem" id="f7H-S0-i5K"/>
                     <connections>
+                        <outlet property="deletebtn" destination="nd1-W0-gpr" id="qj5-bB-4jp"/>
                         <outlet property="webView" destination="kdV-Bp-P54" id="wK9-D3-7Ml"/>
                     </connections>
                 </viewController>
@@ -2058,9 +2059,7 @@ Mehr Alerts und User auf Anfrage</string>
         <designable name="U4C-7N-9Qw">
             <size key="intrinsicContentSize" width="33.333333333333336" height="33.333333333333336"/>
         </designable>
-        <designable name="bCM-pt-Jde">
-            <size key="intrinsicContentSize" width="8" height="0.0"/>
-        </designable>
+        <designable name="bCM-pt-Jde"/>
     </designables>
     <inferredMetricsTieBreakers>
         <segue reference="6zL-Vn-Nqc"/>

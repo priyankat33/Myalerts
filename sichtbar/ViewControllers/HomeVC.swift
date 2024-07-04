@@ -76,7 +76,7 @@ class HomeVC: UIViewController {
     
     private func getKpi() {
         homeViewModel.getKpi(page: 1, sender: self,  onSuccess: { [self] in
-            if self.homeViewModel.package == "2" || self.homeViewModel.package == "1"{
+            if self.homeViewModel.package == "2" || self.homeViewModel.package == "1" {
                 self.heightConstraint.constant = 210
                 self.upgradePlan.isHidden = false
             } else {
